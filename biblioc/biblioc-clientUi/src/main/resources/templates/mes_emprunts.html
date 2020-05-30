@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="http://localhost:8080/webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+          crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bibliotheque.css}"/>
+    <title>Mes emprunts</title>
+</head>
+<body>
+<!--NAVBAR-->
+<div th:include="navbar.html"></div>
+
+<!--BODY-->
+<div class="container">
+    <div class="jumbotron">
+        <div>
+            <h1>Mes emprunts</h1>
+        </div>
+    </div>
+    <blockquote class="blockquote text-right">
+        <small class="text-muted mb-0"><span th:text="${utilisateur.nom + ' ' + utilisateur.prenom}"></span></small>
+    </blockquote>
+
+    <div>
+        <hr class="my-4">
+    </div>
+
+    <div class="resultat table-responsive">
+        <h3 class="text-center"><strong>Vos emprunts</strong></h3>
+            <table class="table table-hover">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Id exemplaire</th>
+                    <th scope="col">Id réservation</th>
+                    <th scope="col">Titre</th>
+                    <th scope="col">Date prêt</th>
+                    <th scope="col">Date retour</th>
+                    <th scope="col">Extention</th>
+                    <th scope="col">Rendu</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="reservation : ${reservations}">
+                    <td th:text="${reservation.getExemplaire().getid_exemplaire()}"></td>
+                    <td th:text="${reservation.id_reservation}"></td>
+                    <td th:text="${reservation.getExemplaire().livre.titre}"></td>
+                    <td th:text="${#dates.format(reservation.getDate_emprunt(), 'dd-MM-yyyy')}"></td>
+                    <td th:text="${#dates.format(reservation.getDate_retour(), 'dd-MM-yyyy')}"></td>
+                    <td th:if="${reservation.getExtension() == false and reservation.getRendu() == false}">
+                        <form th:switch="${reservation.getExtension()}" name="extention_pret" action="#" th:action="@{/user/extention}" method="post">
+                            <input type="hidden" name="id_reservation" th:value="${reservation.id_reservation}" />
+                            <input th:case="false" type="submit" value="Extention" class="btn btn-outline-success"/>
+                            <input th:case="true" disabled type="submit" value="Extention" class="btn btn-outline-secondary"/>
+                        </form>
+                    </td>
+                    <td th:if="${reservation.getRendu() == true}">
+                        <input disabled type="submit" value="Extention" class="btn btn-outline-secondary"/>
+                    </td>
+                    <td th:if="${reservation.getRendu() == false}" th:text="non"></td>
+                    <td th:if="${reservation.getRendu() == true}" th:text="oui"></td>
+                </tr>
+                </tbody>
+            </table>
+    </div>
+</div>
+<!--FOOTER-->
+<div th:include="footer.html"></div>
+
+<!-- SCRIPTS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous">
+</script>
+
+<script type="text/javascript" src="http://localhost:8080/webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous">
+</script>
+</body>
+</html>

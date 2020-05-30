@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="http://localhost:8080/webjars/bootstrap/4.3.1/css/bootstrap.min.css"/>
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+          crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bibliotheque.css}"/>
+    <title>Fiche livre</title>
+</head>
+<body>
+<!--NAVBAR-->
+<div th:include="navbar.html"></div>
+
+<!--BODY-->
+<div class="container">
+    <div class="jumbotron">
+        <div>
+            <h1 class="display-4"><strong><p th:text="${livre.titre}"></p></strong></h1>
+        </div>
+    </div>
+    <blockquote class="blockquote text-right">
+        <p class="mb-0">Auteur : <a class="link" th:href="@{|/details-auteur/${livre.getAuteurs().get(0).getId()}|}" th:text="${livre.auteurs.get(0).prenom + ' ' + livre.auteurs.get(0).nom}"></a></p>
+    </blockquote>
+    <div>
+        <hr class="my-4">
+    </div>
+    <div class="row">
+        <div class="information col-lg-5">
+            <div class="photo col-lg-12">
+                <img class="img-fluid" th:src="@{${'/img/' + livre.image}}" th:alt="${livre.titre}">
+            </div>
+            <hr class="my-4">
+            <div class="bibliotheque col-lg-12">
+                <h3 class="text-center"><strong>Disponibilité</strong></h3>
+
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-action turquoise" th:each="bibliotheque : ${bibliotheques}">
+                        <span th:text="${bibliotheque.nom}"> </span><span class="badge badge-info pull-right" th:text="${bibliotheque.countExemplaireLivre()}"></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="describe col-lg-7">
+            <h3 class="text-center"><strong>Informations</strong></h3>
+            <hr class="my-4">
+            <div class="row">
+                <div class="col-6">
+                    <p>Genre : <label th:text="${livre.genre.genre}"></label></p>
+                </div>
+                <div class="col-6 text-sm-right">
+                    <p>Editeur : <label th:text="${livre.editeur.nom}"></label></p>
+                </div>
+                <div class="col-6">
+                    <p>Date de parution : <label th:text="${livre.annee_parution}"></label></p>
+                </div>
+                <div class="col-6 text-sm-right">
+                    <p>Code Isbn-13 : <label th:text="${livre.isbn13}"></label></p>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div>
+                <p>Résumé : <label th:text="${livre.resume}"></label></p>
+            </div>
+        </div>
+    </div>
+</div>
+<hr class="my-4">
+</div>
+
+<!--FOOTER-->
+<div th:include="footer.html"></div>
+
+<!-- SCRIPTS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous">
+</script>
+
+<script type="text/javascript" src="http://localhost:8080/webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous">
+</script>
+</body>
+</html>

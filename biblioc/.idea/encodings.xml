@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/biblioc-authentification" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/biblioc-authentification/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/biblioc-batch" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/biblioc-batch/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/biblioc-bibliotheque" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/biblioc-bibliotheque/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/biblioc-clientUi" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/biblioc-clientUi/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/biblioc-reservation" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/biblioc-reservation/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/biblioc-utilisateur" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/biblioc-utilisateur/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/config-server" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/config-server/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eureka-server" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eureka-server/src/main/java" charset="UTF-8" />
+  </component>
+</project>
