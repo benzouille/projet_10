@@ -165,7 +165,7 @@ public class ReservationController implements HealthIndicator {
 
         Reservation newReservation = reservationDao.save(reservation);
 
-        if (newReservation == null) throw new ErrorAddException("Impossible d'ajouter ce reservation");
+        if (newReservation == null) throw new ErrorAddException("Impossible d'ajouter cette reservation");
 
         return new ResponseEntity<Reservation>(reservation, HttpStatus.CREATED);
     }
