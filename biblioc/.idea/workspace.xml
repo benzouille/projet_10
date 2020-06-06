@@ -1,20 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="28291b7d-7f07-4250-95c8-d6d977d42d0a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/biblioc-batch/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/biblioc-batch/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/biblioc-bibliotheque/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/biblioc-bibliotheque/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/biblioc-clientUi/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/biblioc-clientUi/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/biblioc-clientUi/src/main/java/fr/biblioc/bibliocclientUi/beans/reservation/ReservationBean.java" beforeDir="false" afterPath="$PROJECT_DIR$/biblioc-clientUi/src/main/java/fr/biblioc/bibliocclientUi/beans/reservation/ReservationBean.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/biblioc-clientUi/src/main/java/fr/biblioc/bibliocclientUi/controller/GestionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/biblioc-clientUi/src/main/java/fr/biblioc/bibliocclientUi/controller/GestionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/biblioc-clientUi/src/main/resources/templates/mes_emprunts.html" beforeDir="false" afterPath="$PROJECT_DIR$/biblioc-clientUi/src/main/resources/templates/mes_emprunts.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/biblioc-reservation/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/biblioc-reservation/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/biblioc-utilisateur/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/biblioc-utilisateur/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config-server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/config-server/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eureka-server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/eureka-server/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/springadmin/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/springadmin/pom.xml" afterDir="false" />
-    </list>
+    <list default="true" id="28291b7d-7f07-4250-95c8-d6d977d42d0a" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -393,6 +380,32 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="2#ticket_bugfix_prolongation_pret" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="WindowStateProjectService">
     <state x="2472" y="178" key="#TODO" timestamp="1591434524149">
