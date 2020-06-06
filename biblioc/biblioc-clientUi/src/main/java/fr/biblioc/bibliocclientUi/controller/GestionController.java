@@ -23,6 +23,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -67,6 +68,18 @@ public class GestionController {
             reservation.setUtilisateur(utilisateurProxy.getUtilisateur(reservation.getId_utilisateur()));
             reservation.setDate_retour(dateDebutToFin(reservation.getDate_emprunt(), reservation.getExtension()));
             reservation.getExemplaire().setLivre(bibliothequeProxy.getLivre(reservation.getExemplaire().getId_livre()));
+
+            /*
+        BUGFIX correction du bug de prolongation d'un prêt si la date de fin de prêt est dépassée.
+         */
+            reservation.setExtension_possible(false);
+            if(!reservation.getRendu()){
+                if(!reservation.getExtension()){
+                    if (reservation.getDate_retour().after(Date.from(Instant.now()))){
+                        reservation.setExtension_possible(true);
+                    }
+                }
+            }
         }
 
         modelAndView.addObject("utilisateur", utilisateur);
