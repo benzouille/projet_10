@@ -31,6 +31,11 @@ public class ReservationBean {
     @NotNull
     private Boolean rendu;
 
+    /*
+        BUGFIX correction du bug de prolongation d'un prêt si la date de fin de prêt est dépassée.
+         */
+    private boolean extension_possible;
+
     @NotNull
     private ExemplaireBean exemplaire;
 
@@ -121,6 +126,14 @@ public class ReservationBean {
 
     public void setRendu(Boolean rendu) {
         this.rendu = rendu;
+    }
+
+    public boolean isExtension_possible() {
+        return extension_possible;
+    }
+
+    public void setExtension_possible(boolean extension_possible) {
+        this.extension_possible = extension_possible;
     }
 
     public ExemplaireBean getExemplaire() {
