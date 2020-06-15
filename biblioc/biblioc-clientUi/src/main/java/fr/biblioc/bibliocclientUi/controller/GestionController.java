@@ -102,17 +102,7 @@ public class GestionController {
             String erreur = (String) flashMap.get("erreur");
             modelAndView.addObject("erreur", erreur);
 
-            for (ReservationBean reservation : reservationByIdCompte){
-                reservation.setUtilisateur(utilisateurProxy.getUtilisateur(reservation.getId_utilisateur()));
-                reservation.setDate_retour(dateDebutToFin(reservation.getDate_emprunt(), reservation.getExtension()));
-                reservation.getExemplaire().setLivre(bibliothequeProxy.getLivre(reservation.getExemplaire().getId_livre()));
-
-                //affichage
-                reservation.setId_view_reservation(reservation.formatId(reservation.getId_reservation()));
-                reservation.setId_view_exemplaire(reservation.formatId(reservation.getExemplaire().getid_exemplaire()));
-
-            }
-            modelAndView.addObject("reservationByIdCompte", reservationByIdCompte); // 2
+            modelAndView.addObject("reservationByIdCompte", formatReservation(reservationByIdCompte)); // 2
         }
 
         List<ReservationBean> reservations;
@@ -121,18 +111,24 @@ public class GestionController {
             reservations = reservationProxy.listeReservationsEnCours();
 
             //ajout des objets livres et utilisateurs ainsi que la date de retour dans les reservations
-            for (ReservationBean reservation : reservations) {
-                reservation.setUtilisateur(utilisateurProxy.getUtilisateur(reservation.getId_utilisateur()));
-                reservation.setDate_retour(dateDebutToFin(reservation.getDate_emprunt(), reservation.getExtension()));
-                reservation.getExemplaire().setLivre(bibliothequeProxy.getLivre(reservation.getExemplaire().getId_livre()));
-                //affichage
-                reservation.setId_view_reservation(reservation.formatId(reservation.getId_reservation()));
-                reservation.setId_view_exemplaire(reservation.formatId(reservation.getExemplaire().getid_exemplaire()));
-            }
-
-            modelAndView.addObject("reservations", reservations);
+            modelAndView.addObject("reservations", formatReservation(reservations));
         }
         return modelAndView;
+    }
+
+    private List<ReservationBean> formatReservation(List<ReservationBean> reservationByIdCompte) {
+        for (ReservationBean reservation : reservationByIdCompte){
+            reservation.setUtilisateur(utilisateurProxy.getUtilisateur(reservation.getId_utilisateur()));
+            reservation.setDate_retour(dateDebutToFin(reservation.getDate_emprunt(), reservation.getExtension()));
+            reservation.getExemplaire().setLivre(bibliothequeProxy.getLivre(reservation.getExemplaire().getId_livre()));
+
+            //affichage
+            reservation.setId_view_reservation(reservation.formatId(reservation.getId_reservation()));
+            reservation.setId_view_exemplaire(reservation.formatId(reservation.getExemplaire().getid_exemplaire()));
+
+        }
+
+        return reservationByIdCompte;
     }
 
     @PostMapping(value = "/gestion/ajout")

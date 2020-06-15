@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" type="text/css" href="http://localhost:8080/webjars/bootstrap/4.3.1/css/bootstrap.min.css"/>
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+          crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/authentification.css}"/>
+    <title>Profil</title>
+</head>
+<body>
+<!--NAVBAR-->
+<div th:include="navbar.html"></div>
+
+<!--BODY-->
+<div class="container">
+    <div class="row">
+        <div class="col-xl-2 col-lg-2 col-md-2"></div>
+        <div class="box-profil col-xl-8 col-lg-8 col-md-8 col-sm-12">
+            <h1>Profil</h1>
+            <div class="row">
+                <p th:if="${compte.getId_utilisateur() == 1}">Pas de profil encore crée !</p>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <label for="1nom">Nom : </label>
+                </div>
+                <div class="col-lg-8">
+                    <label id="1nom" name="nom" th:text="${utilisateur.nom}"></label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-12">
+                    <label for="1prenom" class="">Prenom : </label>
+                </div>
+                <div class="col-lg-8 col-md-12">
+                    <label id="1prenom" th:text="${utilisateur.prenom}"></label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-4 col-md-12">
+                    <label for="1tel" class="">Numéro de téléphone : </label>
+                </div>
+                <div class="col-lg-8 col-md-12">
+                    <label id="1tel" th:text="${utilisateur.telephone}"></label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-4 col-md-12">
+                    <label class="">Adresse : </label>
+                </div>
+                <div class="col-lg-8 col-md-12">
+                    <div class="row">
+                        <div class="col-lg-1">
+                            <label th:text="${adresse.num}"></label>
+                        </div>
+                        <div class="col-lg-11">
+                            <label th:text="${adresse.rue}"></label>
+                        </div>
+                        <div class="col-lg-2">
+                            <label th:text="${adresse.getcode_postal()}"></label>
+                        </div>
+                        <div class="col-lg-10">
+                            <label th:text="${adresse.commune}"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-inline pull-right">
+                <input type="button" name="_ok_" value="Modifier" data-toggle="modal" data-target="#exampleModal">
+            </div>
+        </div>
+        <div class="col-xl-2 col-lg-2 col-md-2"></div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modifier le profil</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form th:action="@{/authentification/profil}" th:object="${utilisateur}" method="post">
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <input name="id_utilisateur" type="hidden" th:value="*{id_utilisateur}"/>
+                                    <input name="id_adresse" type="hidden" th:value="*{getId_adresse()}"/>
+                                    <label for="nom">Nom</label>
+                                    <input class="form-control" id="nom" type="text" name="nom"
+                                           th:value="*{nom}"/>
+                                    <label for="prenom">Prenom</label>
+                                    <input class="form-control" id="prenom" type="text" name="prenom"
+                                           th:value="*{prenom}"/>
+                                    <label for="tel">Numéro de téléphone</label>
+                                    <input class="form-control" id="tel" type="text" name="telephone"
+                                           th:value="*{telephone}"/>
+                                </div>
+                            </div>
+
+                            <div class="row" th:object="${adresse}">
+                                <div class="col-md-2">
+                                    <input name="id_adresse" type="hidden" th:value="*{getid_adresse()}"/>
+                                    <label for="num">N°</label>
+                                    <input class="form-control" id="num" type="text" name="num"
+                                           th:value="*{num}"/>
+                                    <p th:if="${#fields.hasErrors('num')}" th:errors="*{num}">test</p>
+                                </div>
+                                <div class="col-md-10">
+                                    <label for="rue">Rue</label>
+                                    <input class="form-control" id="rue" type="text" name="rue"
+                                           th:value="*{rue}"/>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="code_postal">Code postal</label>
+                                    <input class="form-control" id="code_postal" type="text" name="code_postal"
+                                           th:value="*{getcode_postal()}"/>
+                                </div>
+                                <div class="col-md-9">
+                                    <label for="commune">Commune</label>
+                                    <input class="form-control" id="commune" type="text"
+                                           name="commune" th:value="*{commune}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <input type="submit" name="_modifier_profil_" class="btn btn-primary" value="Enregistrer"/>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--FOOTER-->
+<div th:include="footer.html"></div>
+
+<!-- SCRIPTS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous">
+</script>
+
+<script type="text/javascript" src="http://localhost:8080/webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous">
+</script>
+
+</body>
+</html>
