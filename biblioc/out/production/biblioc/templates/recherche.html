@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html class="no-overflow" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head th:fragment="head" xmlns:th="http://www.thymeleaf.org" >
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="http://localhost:8080/webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+          crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bibliotheque.css}"/>
+
+    <title>Recherche</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+
+<body>
+<!--NAVBAR-->
+<div th:include="navbar.html"></div>
+
+<!--BODY-->
+
+<div class="container">
+    <div class="jumbotron">
+        <h1 class="display-4"><strong>Rechercher</strong></h1>
+    </div>
+
+    <hr class="my-4">
+
+    <div class="recherche">
+
+        <div class="row">
+            <div class="col-3">
+                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <a class="nav-link active" id="v-pills-livre-tab" data-toggle="pill" href="#v-pills-livre" role="tab" aria-controls="v-pills-livre" aria-selected="true">Par titre</a>
+                    <a class="nav-link" id="v-pills-auteur-tab" data-toggle="pill" href="#v-pills-auteur" role="tab" aria-controls="v-pills-auteur" aria-selected="false">Par auteur</a>
+                    <a class="nav-link" id="v-pills-genre-tab" data-toggle="pill" href="#v-pills-genre" role="tab" aria-controls="v-pills-genre" aria-selected="false">Par genre</a>
+                    <a class="nav-link" id="v-pills-multi-tab" data-toggle="pill" href="#v-pills-multi" role="tab" aria-controls="v-pills-multi" aria-selected="false">Multi-critères</a>
+                </div>
+            </div>
+            <div class="col-9">
+                <div class="tab-content" id="v-pills-tabContent">
+                    <div class="tab-pane fade show active" id="v-pills-livre" role="tabpanel" aria-labelledby="v-pills-livre-tab">
+                        <form name="titre" th:action="@{/recherche}" method="post">
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label>Titre</label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" name="titre" class="form-control" placeholder="titre">
+                                    </div>
+                                </div>
+                                <div class="row col-12">
+                                </div>
+                            </div>
+                            <div class="pull-right margin-20t">
+                                <input type="submit" value="Rechercher" class="btn btn-outline-secondary"/>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-auteur" role="tabpanel" aria-labelledby="v-pills-auteur-tab">
+                        <form name="id_auteur" action="#" th:action="@{/recherche}" method="post">
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label>Auteur</label>
+                                    <div class="input-group mb-3">
+                                        <select name="id_auteur" class="custom-select">
+                                            <option th:each="auteur : ${auteurs}"
+                                                    th:value="${auteur.id}"
+                                                    th:text="${auteur.nom}">
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row col-12">
+                                </div>
+                            </div>
+                            <div class="pull-right margin-20t">
+                                <input type="submit" value="Rechercher" class="btn btn-outline-secondary"/>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-genre" role="tabpanel" aria-labelledby="v-pills-genre-tab">
+                        <form name="id_genre" action="#" th:action="@{/recherche}" method="post">
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label>Genre</label>
+                                    <div class="input-group mb-3">
+                                        <select name="id_genre" class="custom-select">
+                                                <option th:each="genre : ${genres}"
+                                                        th:value="${genre.getid_genre()}"
+                                                        th:text= "${genre.genre}">
+                                                </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row col-12">
+                                </div>
+                            </div>
+                            <div class="pull-right margin-20t">
+                                <input type="submit" name="_recherche_spot_" value="Rechercher" class="btn btn-outline-secondary"/>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-multi" role="tabpanel" aria-labelledby="v-pills-multi-tab">
+                        <form name="id_multi" action="#" th:action="@{/recherches}" method="post">
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label>Auteur</label>
+                                    <div class="input-group mb-3">
+                                        <select name="id_auteur" class="custom-select">
+                                            <option th:value="-1">sélectionnez</option>
+                                            <option th:each="auteur : ${auteurs}"
+                                                    th:value="${auteur.id}"
+                                                    th:text="${auteur.nom}">
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Genre</label>
+                                    <div class="input-group mb-3">
+                                        <select name="id_genre" class="custom-select">
+                                            <option th:value="-1">sélectionnez</option>
+                                            <option th:each="genre : ${genres}"
+                                                    th:value="*{genre.getid_genre()}"
+                                                    th:text= "${genre.genre}">
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Bibliothèque</label>
+                                    <div class="input-group mb-3">
+                                        <select class="custom-select" name="id_biblio">
+                                            <option th:value="-1">sélectionnez</option>
+                                            <option th:each="biblio : ${biblios}"
+                                                    th:value="*{biblio.getid_biblio()}"
+                                                    th:text= "${biblio.nom}">
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row col-12">
+                                </div>
+                            </div>
+                            <div class="pull-right margin-20t">
+                                <input type="submit" name="_recherche_spot_" value="Rechercher" class="btn btn-outline-secondary"/>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div th:if="${erreur} != null">
+                <label th:text="${erreur}" style="color: red; font-size: 25px"></label>
+            </div>
+        </div>
+        <br>
+    </div>
+
+    <div>
+        <hr class="my-4">
+    </div>
+
+    <div class="resultat table-responsive">
+        <h3 class="text-center"><strong>Résultat</strong></h3>
+        <table class="table table-hover">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">Livre</th>
+                <th scope="col">Auteur</th>
+                <th scope="col">Genre</th>
+            </tr>
+            </thead>
+            <tbody th:if="${livres != null}">
+                <tr th:each="livre : ${livres}">
+                    <td><a class="link" th:href="@{|/details-livre/${livre.getid_livre()}|}" th:text="${livre.titre}"></a></td>
+                    <td><a class="link" th:href="@{|/details-auteur/${livre.getAuteurs().get(0).getId()}|}" th:text="${livre.auteurs.get(0).prenom + ' ' + livre.auteurs.get(0).nom}"></a></td>
+                    <td th:text="${livre.genre.genre}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--FOOTER-->
+<div th:include="footer.html"></div>
+
+<!-- SCRIPTS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous">
+</script>
+
+<script type="text/javascript" src="http://localhost:8080/webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous">
+</script>
+
+</body>
+</html>

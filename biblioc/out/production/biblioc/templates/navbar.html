@@ -1,0 +1,43 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar-fixed-top">
+        <a class="navbar-brand" href="/">BiblioC</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/recherche"><i class="fa fa-search" style="font-size:25px"></i> Rechercher</a>
+                </li>
+                <!--TODO revoir la condition-->
+                <li class="nav-item" th:if="${compte == null}">
+                    <a class="nav-link" href="/authentification/inscription"><i class="fa fa-genderless" style="font-size:25px"></i> S'inscrire</a>
+                </li>
+                <li class="nav-item" th:if="${compte == null}">
+                    <a class="nav-link" href="/authentification/connexion"><i class="fa fa-genderless" style="font-size:25px"></i> Se connecter</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <!--TODO revoir la condition-->
+                    <li class="nav-item" th:if="${compte != null}">
+                        <a class="nav-link" href="/mes_emprunts"><i class="fa fa-book" style="font-size:25px"></i> Mes emprunts</a>
+                    </li>
+                    <li class="nav-item" th:if="${compte != null && compte.id_role > 1}">
+                        <a class="nav-link" href="/gestion"><i class="fa fa-cogs" style="font-size:25px"></i> Gestion</a>
+                    </li>
+                    <li class="nav-item" th:if="${compte != null}">
+                        <a class="nav-link" href="/authentification/profil"><i class="fa fa-user" style="font-size:25px"></i> Profil</a>
+                    </li>
+                    <li style="margin-top: 5px" th:if="${compte != null}">
+                        <form class="form-inline" action="/authentification/deconnexion" method="post">
+                            <button class="btn btn-outline-secondary btn-outline-danger " type="submit" name="_disconnect_"><i class="fa fa-power-off"></i> Deconnexion</button>
+                        </form>
+                    </li>
+            </ul>
+
+        </div>
+    </nav>
+</header>
+</html>

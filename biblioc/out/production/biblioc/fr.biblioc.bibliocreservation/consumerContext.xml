@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--<beans xmlns="http://www.springframework.org/schema/beans"-->
+<!--       xmlns:context="http://www.springframework.org/schema/context"-->
+<!--       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"-->
+<!--       xsi:schemaLocation="-->
+<!--            http://www.springframework.org/schema/beans-->
+<!--            http://www.springframework.org/schema/beans/spring-beans.xsd-->
+<!--            http://www.springframework.org/schema/context-->
+<!--            http://www.springframework.org/schema/context/spring-context.xsd">-->
+
+
+<!--    &lt;!&ndash; ===== Fonctionnement avec les annotations ===== &ndash;&gt;-->
+
+<!--    &lt;!&ndash; Prend en compte la configuration des injections (@Inject...) &ndash;&gt;-->
+<!--    <context:annotation-config/>-->
+
+<!--    &lt;!&ndash; Scanne les packages pour trouver les beans qui se déclarent (@Named...) &ndash;&gt;-->
+<!--    <context:component-scan base-package="fr.biblioc.bibliocreservation"/>-->
+
+<!--</beans>-->

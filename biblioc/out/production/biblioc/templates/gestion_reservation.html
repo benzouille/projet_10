@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="http://localhost:8080/webjars/bootstrap/4.3.1/css/bootstrap.min.css"/>
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+          crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/gestion.css}"/>
+    <title>Gestion reservation</title>
+</head>
+<body th:if="${compte} != null and ${compte.id_role} > 1">
+<!--NAVBAR-->
+<div th:include="navbar.html"></div>
+
+<!--BODY-->
+
+<div class="container-fluid">
+    <div class="jumbotron">
+        <h1 class="display-4"><strong>Gestion</strong></h1>
+    </div>
+
+    <hr class="my-4">
+
+    <div class="gestion">
+
+        <div class="row">
+            <div class="col-2">
+                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <a class="nav-link active" id="v-pills-enCours-tab" data-toggle="pill" href="#v-pills-enCours"
+                       role="tab" aria-controls="v-pills-enCours" aria-selected="true">Prêt en cours</a>
+                    <a class="nav-link" id="v-pills-pret-tab" data-toggle="pill" href="#v-pills-pret" role="tab"
+                       aria-controls="v-pills-pret" aria-selected="false">Ajouter un prêt</a>
+                    <a class="nav-link" id="v-pills-retour-tab" data-toggle="pill" href="#v-pills-retour" role="tab"
+                       aria-controls="v-pills-retour" aria-selected="false">Retour de prêt</a>
+                    <a class="nav-link" id="v-pills-utilisateur-tab" data-toggle="pill" href="#v-pills-utilisateur" role="tab"
+                       aria-controls="v-pills-utilisateur" aria-selected="false">Par utilisateur</a>
+                </div>
+            </div>
+            <div class="col-10">
+                <div class="tab-content" id="v-pills-tabContent">
+
+                    <!--******************** PRET EN COURS ********************-->
+
+                    <div class="tab-pane fade show active" id="v-pills-enCours" role="tabpanel"
+                         aria-labelledby="v-pills-enCours-tab">
+                        <div class="resultat table-responsive">
+                            <table class="table table-hover">
+                                <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">Utilisateur</th>
+                                    <th scope="col">N° d'exemplaire</th>
+                                    <th scope="col">N° de réservation</th>
+                                    <th scope="col">Titre</th>
+                                    <th scope="col">Date prêt</th>
+                                    <th scope="col">Date retour</th>
+                                    <th scope="col">Extention</th>
+                                    <th scope="col">Rendu</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="reservation : ${reservations}">
+                                    <td th:text="${reservation.utilisateur.nom + ' ' + reservation.utilisateur.prenom + ' id : ' + reservation.utilisateur.id_utilisateur}"></td>
+                                    <td th:text="${reservation.getId_view_exemplaire()}"></td>
+                                    <td th:text="${reservation.getId_view_reservation()}"></td>
+                                    <td th:text="${reservation.getExemplaire().livre.titre}"></td>
+                                    <td th:text="${#dates.format(reservation.getDate_emprunt(), 'dd-MM-yyyy')}"></td>
+                                    <td th:text="${#dates.format(reservation.getDate_retour(), 'dd-MM-yyyy')}"></td>
+                                    <td>
+                                        <form th:switch="${reservation.getExtension()}" name="extention_pret" action="#" th:action="@{/gestion/extention}" method="post">
+                                            <input type="hidden" name="id_reservation" th:value="${reservation.id_reservation}" />
+                                            <input th:case="false" type="submit" value="Extention" class="btn btn-outline-success"/>
+                                            <input th:case="true" disabled type="submit" value="Extention" class="btn btn-outline-secondary"/>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form th:switch="${reservation.getRendu()}" name="retour_pret" action="#" th:action="@{/gestion/retour}" method="post">
+                                            <input type="hidden" name="id_reservation" th:value="${reservation.id_reservation}" />
+                                            <input th:case="false" type="submit" value="Rendu" class="btn btn-outline-success"/>
+                                            <input th:case="true" disabled type="submit" value="Rendu" class="btn btn-outline-secondary"/>
+                                        </form>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!--******************** AJOUT DE PRET ********************-->
+
+                    <div class="tab-pane fade" id="v-pills-pret" role="tabpanel" aria-labelledby="v-pills-pret-tab">
+                        <form name="ajout_pret" action="#" th:action="@{/gestion/ajout}" method="post">
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label>Identifiant exemplaire</label>
+                                    <div class="input-group mb-3">
+                                        <input type="number" name="id_exemplaire" class="form-control" placeholder="id exemplaire">
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Identifiant utilisateur</label>
+                                    <div class="input-group mb-3">
+                                        <input type="number" name="id_utilisateur" class="form-control" placeholder="id utilisateur">
+                                    </div>
+                                </div>
+                                <div class="row col-12">
+                                </div>
+                            </div>
+                            <div class="pull-right margin-20t">
+                                <input type="submit" name="_recherche_spot_" value="Ajouter le prêt"
+                                       class="btn btn-outline-secondary"/>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!--******************** RETOUR DE PRET ********************-->
+
+                    <div class="tab-pane fade" id="v-pills-retour" role="tabpanel" aria-labelledby="v-pills-retour-tab">
+                        <form name="retour_pret" action="#" th:action="@{/gestion/retour}" method="post">
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label>Identifiant réservation</label>
+                                    <div class="input-group mb-3">
+                                        <input type="number" name="id_reservation" class="form-control" placeholder="id réservation">
+                                    </div>
+                                </div>
+                                <div class="row col-12">
+                                </div>
+                            </div>
+                            <div class="pull-right margin-20t">
+                                <input type="submit" name="_recherche_spot_" value="Rendu"
+                                       class="btn btn-outline-secondary"/>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!--******************** PAR UTILISATEUR ********************-->
+
+                    <div class="tab-pane fade" id="v-pills-utilisateur" role="tabpanel" aria-labelledby="v-pills-utilisateur-tab">
+                        <form name="par_utilisateur" action="#" th:action="@{/gestion/utilisateur}" method="post">
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label>Identifiant utilisateur</label>
+                                    <div class="input-group mb-3">
+                                        <input type="number" name="id_utilisateur" class="form-control" placeholder="id utilisateur">
+                                    </div>
+                                </div>
+                                <div class="row col-12">
+                                </div>
+                            </div>
+                            <div class="pull-right">
+                                <input type="submit" name="_recherche_spot_" value="Rechercher"
+                                       class="btn btn-outline-secondary"/>
+                            </div>
+                        </form>
+
+                        <br>
+                        <hr class="my-4">
+
+                        <div class="resultat table-responsive">
+                            <table class="table table-hover">
+                                <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">Utilisateur</th>
+                                    <th scope="col">N° d'exemplaire</th>
+                                    <th scope="col">N° de réservation</th>
+                                    <th scope="col">Titre</th>
+                                    <th scope="col">Date prêt</th>
+                                    <th scope="col">Date retour</th>
+                                    <th scope="col">Extention</th>
+                                    <th scope="col">Rendu</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="reservation : ${reservationByIdCompte}">
+                                    <td th:text="${reservation.utilisateur.nom + ' ' + reservation.utilisateur.prenom + ' id : ' + reservation.utilisateur.id_utilisateur}"></td>
+                                    <td th:text="${reservation.getExemplaire().getid_exemplaire()}"></td>
+                                    <td th:text="${reservation.id_reservation}"></td>
+                                    <td th:text="${reservation.getExemplaire().livre.titre}"></td>
+                                    <td th:text="${#dates.format(reservation.getDate_emprunt(), 'dd-MM-yyyy')}"></td>
+                                    <td th:text="${#dates.format(reservation.getDate_retour(), 'dd-MM-yyyy')}"></td>
+                                    <td>
+                                        <form name="extention_pret" action="#" th:action="@{/gestion/extention}" method="post">
+                                            <input type="hidden" name="id_reservation" th:value="${reservation.id_reservation}" />
+                                            <input th:if="${reservation.getExtension() == false and reservation.getRendu() == false}" type="submit" value="Extention" class="btn btn-outline-success"/>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form th:switch="${reservation.getRendu()}" name="retour_pret" action="#" th:action="@{/gestion/retour}" method="post">
+                                            <input type="hidden" name="id_reservation" th:value="${reservation.id_reservation}" />
+                                            <input th:case="false" type="submit" value="Rendu" class="btn btn-outline-success"/>
+                                            <input th:case="true" disabled type="submit" value="Rendu" class="btn btn-outline-secondary"/>
+                                        </form>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div th:if="${erreur} != null">
+                <label th:text="${erreur}" style="color: red; font-size: 25px"></label>
+            </div>
+        </div>
+        <br>
+    </div>
+</div>
+<!--FOOTER-->
+<div th:include="footer.html"></div>
+
+<!-- SCRIPTS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous">
+</script>
+
+<script type="text/javascript" src="http://localhost:8080/webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous">
+</script>
+</body>
+</html>
