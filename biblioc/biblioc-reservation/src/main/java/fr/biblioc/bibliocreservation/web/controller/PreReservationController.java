@@ -22,7 +22,7 @@ import java.util.Optional;
  * Controller de la classe {@link PreReservation}
  */
 @RestController
-public class PreReservationController implements HealthIndicator {
+public class PreReservationController {
 
     //------------------------- ATTRIBUTS -------------------------
 
@@ -35,20 +35,6 @@ public class PreReservationController implements HealthIndicator {
     Logger log = LoggerFactory.getLogger(this.getClass());
 
     //------------------------- METHODE -------------------------
-
-    /**
-     * Indique le status du microservice
-     * @return etat du microservice
-     */
-    @Override
-    public Health health() {
-        List<PreReservation> preReservations = preReservationDao.findAll();
-
-        if(preReservations.isEmpty()) {
-            return Health.down().build();
-        }
-        return Health.up().build();
-    }
 
     /**
      * Affiche la liste de toutes les preReservations

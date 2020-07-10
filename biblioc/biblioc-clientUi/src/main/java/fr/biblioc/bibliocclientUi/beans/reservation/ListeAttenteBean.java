@@ -1,20 +1,19 @@
-package fr.biblioc.bibliocreservation.dto;
+package fr.biblioc.bibliocclientUi.beans.reservation;
 
-import fr.biblioc.bibliocreservation.model.PreReservation;
-import fr.biblioc.bibliocreservation.web.exceptions.ErrorAddException;
-import fr.biblioc.bibliocreservation.web.exceptions.ObjectNotFoundException;
+import fr.biblioc.bibliocclientUi.beans.utilities.ErrorAddException;
+import fr.biblioc.bibliocclientUi.beans.utilities.ObjectNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListeAttenteDto {
+public class ListeAttenteBean {
     //------------------------- ATTRIBUTS -------------------------
 
     private int id_liste_attente;
 
     private int nbreExemplaire;
 
-    private List<PreReservation> preReservationList;
+    private List<PreReservationBean> preReservationList;
 
     private int id_livre;
 
@@ -22,8 +21,8 @@ public class ListeAttenteDto {
 
     //------------------------- CONSTRUCTEUR -------------------------
 
-    public ListeAttenteDto(){
-        preReservationList = new ArrayList<PreReservation>();
+    public ListeAttenteBean(){
+        preReservationList = new ArrayList<PreReservationBean>();
     }
 
     //------------------------- METHODES -------------------------
@@ -32,7 +31,7 @@ public class ListeAttenteDto {
      * La liste de réservation ne peut comporter qu’un maximum de personnes correspondant à 2x le nombre d’exemplaires de l’ouvrage.
      * @param preReservation
      */
-    public void addToList(PreReservation preReservation){
+    public void addToList(PreReservationBean preReservation) throws ErrorAddException {
         if(preReservationList.size() >= nbreExemplaire*2){
             preReservationList.add(preReservation);
         }
@@ -41,7 +40,7 @@ public class ListeAttenteDto {
         }
     }
 
-    public void delToList(PreReservation preReservation) {
+    public void delToList(PreReservationBean preReservation) throws ObjectNotFoundException {
         if(preReservationList.contains(preReservation)){
             preReservationList.remove(preReservation);
 
@@ -49,6 +48,15 @@ public class ListeAttenteDto {
         else{
             throw new ObjectNotFoundException("la préreservation n'existe pas dans la liste");
         }
+    }
+
+    public int getSizeListAttente(){
+        int sizeListAttente = 0;
+        if(nbreExemplaire != 0){
+            int nbrePreReserv = getPreReservationList().size();
+            sizeListAttente = nbreExemplaire * 2 - nbrePreReserv;
+        }
+        return sizeListAttente;
     }
 
     //------------------------- GETTER/SETTER -------------------------
@@ -69,11 +77,11 @@ public class ListeAttenteDto {
         this.nbreExemplaire = nbreExemplaire;
     }
 
-    public List<PreReservation> getPreReservationList() {
+    public List<PreReservationBean> getPreReservationList() {
         return preReservationList;
     }
 
-    public void setPreReservationList(List<PreReservation> preReservationList) {
+    public void setPreReservationList(List<PreReservationBean> preReservationList) {
         this.preReservationList = preReservationList;
     }
 

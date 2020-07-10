@@ -1,5 +1,7 @@
 package fr.biblioc.bibliocreservation.dto;
 
+import fr.biblioc.bibliocreservation.model.ListeAttente;
+
 import java.util.Date;
 
 public class PreReservationDto {
@@ -9,7 +11,7 @@ public class PreReservationDto {
 
     private Date datePreReservation;
 
-    private int id_liste_attente;
+    private ListeAttente listeAttente;
 
     private boolean expire;
 
@@ -19,10 +21,10 @@ public class PreReservationDto {
         expire = false;
     }
 
-    public PreReservationDto(int id_compte, Date datePreReservation, int id_liste_attente, boolean expire) {
+    public PreReservationDto(int id_compte, Date datePreReservation, ListeAttente listeAttente, boolean expire) {
         this.id_compte = id_compte;
         this.datePreReservation = datePreReservation;
-        this.id_liste_attente = id_liste_attente;
+        this.listeAttente = listeAttente;
         this.expire = expire;
     }
 
@@ -44,12 +46,12 @@ public class PreReservationDto {
         this.datePreReservation = datePreReservation;
     }
 
-    public int getId_liste_attente() {
-        return id_liste_attente;
+    public ListeAttente getListeAttente() {
+        return listeAttente;
     }
 
-    public void setId_liste_attente(int id_liste_attente) {
-        this.id_liste_attente = id_liste_attente;
+    public void setListeAttente(ListeAttente listeAttente) {
+        this.listeAttente = listeAttente;
     }
 
     public boolean isExpire() {
@@ -62,12 +64,11 @@ public class PreReservationDto {
 
     //------------------------- TO_STRING -------------------------
 
-
     @Override
     public String toString() {
         return "PreReservation{" +
                 "datePreReservation=" + datePreReservation +
-                ", id_liste_attente=" + id_liste_attente +
+                ", listeAttente=" + listeAttente +
                 ", expire=" + expire +
                 '}';
     }

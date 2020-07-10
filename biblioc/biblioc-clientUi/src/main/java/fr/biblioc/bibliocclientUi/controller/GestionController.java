@@ -12,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -170,6 +169,15 @@ public class GestionController {
         }
 
         return new ModelAndView("redirect:/gestion");
+    }
+
+    @PostMapping(value = "/gestion/userPrereservation")
+    public ModelAndView prereservation(String id_livre, String id_bibliotheque, HttpServletRequest request){
+
+        CompteBean compte = (CompteBean)request.getSession().getAttribute("compte");
+
+        System.out.println("prereservation : id_livre :" + id_livre + " id_bibliotheque : " + id_bibliotheque + " id_utilisateur : " + compte.getId_utilisateur());
+        return new ModelAndView("redirect:/mes_emprunts");
     }
 
     @PostMapping(value = "/gestion/retour")

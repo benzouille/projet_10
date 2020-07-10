@@ -1,34 +1,25 @@
-package fr.biblioc.bibliocreservation.model;
+package fr.biblioc.bibliocclientUi.beans.reservation;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
-@Entity(name = "prereservation")
-public class PreReservation {
-
+public class PreReservationBean {
     //------------------------- ATTRIBUTS -------------------------
 
-    @Id
-    @GeneratedValue
     private int id_compte;
 
-    @Column(name = "date")
     private Date datePreReservation;
 
-    @JoinColumn(name = "id_liste_attente")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private ListeAttente listeAttente;
+    private ListeAttenteBean listeAttente;
 
     private boolean expire;
 
     //------------------------- CONSTRUCTEUR -------------------------
 
-    public PreReservation() {
+    public PreReservationBean() {
         expire = false;
     }
 
-    public PreReservation(int id_compte, Date datePreReservation, ListeAttente listeAttente, boolean expire) {
+    public PreReservationBean(int id_compte, Date datePreReservation, ListeAttenteBean listeAttente, boolean expire) {
         this.id_compte = id_compte;
         this.datePreReservation = datePreReservation;
         this.listeAttente = listeAttente;
@@ -53,11 +44,11 @@ public class PreReservation {
         this.datePreReservation = datePreReservation;
     }
 
-    public ListeAttente getListeAttente() {
+    public ListeAttenteBean getListeAttente() {
         return listeAttente;
     }
 
-    public void setListeAttente(ListeAttente listeAttente) {
+    public void setListeAttente(ListeAttenteBean listeAttente) {
         this.listeAttente = listeAttente;
     }
 
