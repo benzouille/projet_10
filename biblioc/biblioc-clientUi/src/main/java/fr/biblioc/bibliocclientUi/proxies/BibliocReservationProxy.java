@@ -2,6 +2,7 @@ package fr.biblioc.bibliocclientUi.proxies;
 
 import fr.biblioc.bibliocclientUi.beans.reservation.BibliothequeBean;
 import fr.biblioc.bibliocclientUi.beans.reservation.ExemplaireBean;
+import fr.biblioc.bibliocclientUi.beans.reservation.ListeAttenteBean;
 import fr.biblioc.bibliocclientUi.beans.reservation.ReservationBean;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,9 @@ public interface BibliocReservationProxy {
 
     @GetMapping(value = "/Reservations")
     List<ReservationBean> listReservations();
+
+    @GetMapping(value = "/ListeAttente/{id_livre}")
+    List<ListeAttenteBean> listAttente(@PathVariable("id_livre") int id_livre);
 
     @GetMapping(value = "/Reservations/en_cours")
     List<ReservationBean> listeReservationsEnCours();
@@ -43,6 +47,9 @@ public interface BibliocReservationProxy {
 
     @GetMapping(value = "/Exemplaires/existe/{id}")
     boolean isExemplaire(@PathVariable("id") int id);
+
+    @GetMapping( value = "/Exemplaires/count/{id_livre}/{id_biblio}")
+    int exemplaireCount(@PathVariable("id_livre") int id_livre,@PathVariable("id_biblio") int id_biblio);
 
     @GetMapping(value = "/Exemplaires/{id}")
     ExemplaireBean getExemplaire(@PathVariable("id") int id);

@@ -8,14 +8,11 @@ import fr.biblioc.bibliocreservation.web.exceptions.ErrorAddException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.actuate.health.Health;
-import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,7 +20,7 @@ import java.util.Optional;
  * Controller de la classe {@link ListeAttente}
  */
 @RestController
-public class ListeAttenteController implements HealthIndicator {
+public class ListeAttenteController {
 
     //------------------------- ATTRIBUTS -------------------------
 
@@ -38,20 +35,6 @@ public class ListeAttenteController implements HealthIndicator {
     //------------------------- METHODE -------------------------
 
     /**
-     * Indique le status du microservice
-     * @return etat du microservice
-     */
-    @Override
-    public Health health() {
-        List<ListeAttente> listeAttentes = listeAttenteDao.findAll();
-
-        if(listeAttentes.isEmpty()) {
-            return Health.down().build();
-        }
-        return Health.up().build();
-    }
-
-    /**
      * Affiche la liste de toutes les listeAttentes
      * @return liste de {@link ListeAttente}
      */
@@ -63,15 +46,20 @@ public class ListeAttenteController implements HealthIndicator {
     }
 
     /**
-     * Récuperer un listeAttente par son id
-     * @param id int
+     * Récuperer un listeAttente par sa bibliotheque et son livre
+     * @param id_livre int
      * @return bean {@link ListeAttente}
      */
-    @GetMapping( value = "/ListeAttentes/{id}")
-    public ListeAttenteDto recupererUnListeAttente(@PathVariable int id) {
+    @GetMapping( value = "/ListeAttente/{id_livre}")
+    public List<ListeAttenteDto> recupererListesAttenteParLivre(@PathVariable("id_livre") int id_livre) {
 
-        Optional<ListeAttente> listeAttente = listeAttenteDao.findById(id);
-        return getListeAttenteDto(listeAttente);
+        List<ListeAttente> listeAttentes = listeAttenteDao.findByIdLivre(id_livre);
+        List<ListeAttenteDto> listeAttenteDtos = new ArrayList<>();
+        for (ListeAttente listeAttente : listeAttentes){
+            listeAttenteDtos.add(getListeAttenteDto(listeAttente));
+        }
+
+        return listeAttenteDtos;
     }
 
     /**
@@ -106,13 +94,13 @@ public class ListeAttenteController implements HealthIndicator {
      * @param listeAttente ENTITY
      * @return listeAttenteDto DTO
      */
-    private ListeAttenteDto getListeAttenteDto(Optional<ListeAttente> listeAttente) {
+    private ListeAttenteDto getListeAttenteDto(ListeAttente listeAttente) {
         ListeAttenteDto listeAttenteDto = null;
 
-        if(listeAttente.isPresent()) {
-            listeAttenteDto = listeAttenteMapper.listeAttenteToListeAttenteDto(listeAttente.get());
+
+            listeAttenteDto = listeAttenteMapper.listeAttenteToListeAttenteDto(listeAttente);
             log.info("ListeAttenteDto : " + listeAttenteDto);
-        }
+
         return listeAttenteDto;
     }
 

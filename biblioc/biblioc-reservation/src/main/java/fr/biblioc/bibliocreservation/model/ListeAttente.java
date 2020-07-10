@@ -3,52 +3,34 @@ package fr.biblioc.bibliocreservation.model;
 import fr.biblioc.bibliocreservation.web.exceptions.ErrorAddException;
 import fr.biblioc.bibliocreservation.web.exceptions.ObjectNotFoundException;
 
+import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
+@Entity(name = "liste_attente")
 public class ListeAttente {
 
     //------------------------- ATTRIBUTS -------------------------
 
+    @Id
     private int id_liste_attente;
 
+    @Transient
     private int nbreExemplaire;
 
+    @OneToMany(mappedBy = "listeAttente")
     private List<PreReservation> preReservationList;
 
-    private String id_livre;
+    private int id_livre;
 
+    @Column(name = "id_biblio")
     private int id_bibliotheque;
 
     //------------------------- CONSTRUCTEUR -------------------------
 
     public ListeAttente(){
         preReservationList = new ArrayList<PreReservation>();
-    }
-
-    //------------------------- METHODES -------------------------
-
-    /**
-     * La liste de réservation ne peut comporter qu’un maximum de personnes correspondant à 2x le nombre d’exemplaires de l’ouvrage.
-     * @param preReservation
-     */
-    public void addToList(PreReservation preReservation){
-        if(preReservationList.size() >= nbreExemplaire*2){
-            preReservationList.add(preReservation);
-        }
-        else {
-            throw new ErrorAddException("la liste de réservation est pleine");
-        }
-    }
-
-    public void delToList(PreReservation preReservation) {
-        if(preReservationList.contains(preReservation)){
-            preReservationList.remove(preReservation);
-
-        }
-        else{
-            throw new ObjectNotFoundException("la préreservation n'existe pas dans la liste");
-        }
     }
 
     //------------------------- GETTER/SETTER -------------------------
@@ -77,11 +59,11 @@ public class ListeAttente {
         this.preReservationList = preReservationList;
     }
 
-    public String getId_livre() {
+    public int getId_livre() {
         return id_livre;
     }
 
-    public void setId_livre(String id_livre) {
+    public void setId_livre(int id_livre) {
         this.id_livre = id_livre;
     }
 

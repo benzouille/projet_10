@@ -32,19 +32,85 @@
                 <img class="img-fluid" th:src="@{${'/img/' + livre.image}}" th:alt="${livre.titre}">
             </div>
             <hr class="my-4">
-            <div class="bibliotheque col-lg-12">
+            <div th:if="${compte} != null" class="bibliotheque col-lg-12">
                 <h3 class="text-center"><strong>Disponibilité</strong></h3>
 
                 <ul class="list-group">
                     <li class="list-group-item list-group-item-action turquoise" th:each="bibliotheque : ${bibliotheques}">
-                        <span th:text="${bibliotheque.nom}"> </span><span class="badge badge-info pull-right" th:text="${bibliotheque.countExemplaireLivre()}"></span>
+                        <span th:text="${bibliotheque.nom}"> </span>
+
+                        <button th:if="${bibliotheque.countExemplaireLivre() > 0}" type="button" class="btn btn-primary pull-right"  data-toggle="modal" data-target="#Modal1">Disponible <span class="badge badge-light pull-right" style="margin-top: 5px ; margin-left: 5px" th:text="${bibliotheque.countExemplaireLivre()}"></span></button>
+                        <button th:if="${bibliotheque.countExemplaireLivre() == 0 and bibliotheque.listesAttentes.get(0).getSizeListAttente() > 0}" type="button" class="btn btn-warning pull-right"  data-toggle="modal" data-target="#Modal2">Réserver <span class="badge badge-light pull-right" style="margin-top: 5px ; margin-left: 5px" th:text="${bibliotheque.countExemplaireLivre()}"></span></button>
+                        <button th:if="${bibliotheque.countExemplaireLivre() == 0 and bibliotheque.listesAttentes.get(0).getSizeListAttente() == 0}" type="button" disabled class="btn btn-danger pull-right">Indisponible <span class="badge badge-light pull-right" style="margin-top: 5px ; margin-left: 5px" th:text="${bibliotheque.countExemplaireLivre()}"></span></button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="Modal1" tabindex="-1" role="dialog" aria-labelledby="ModalLabel1" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="ModalLabel1">Réservation</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                            <form name="réservation" action="#" th:action="@{/gestion/reservation}" method="post">
+                                                <input type="hidden" name="id_livre" th:value="${livre.getid_livre()}" />
+                                                <input type="hidden" name="id_bibliotheque" th:value="${bibliotheque.getid_biblio()}" />
+                                                <label>le livre </label>
+                                                <label th:text="${livre.titre}"></label>
+                                                <label>est disponible dans la bibliothèque</label>
+                                                <label th:text="${bibliotheque.getNom()}"></label>
+                                                <label>Souhaitez vous le réserver ? </label>
+                                                <input type="submit" class="btn btn-primary" value="Réserver" />
+                                            </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="Modal2" tabindex="-1" role="dialog" aria-labelledby="ModalLabel2" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="ModalLabel2">Préréservation</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form name="préreservation" action="#" th:action="@{/gestion/userPrereservation}" method="post">
+                                            <input type="hidden" name="id_livre" th:value="${livre.getid_livre()}" />
+                                            <input type="hidden" name="id_bibliotheque" th:value="${bibliotheque.getid_biblio()}" />
+                                            <label>le livre </label>
+                                            <label th:text="${livre.titre}"></label>
+                                            <label>n'est pas disponible dans la bibliothèque</label>
+                                            <label th:text="${bibliotheque.getNom()}"></label>
+                                            <label>Souhaitez vous le préréserver ? </label>
+                                            <input type="submit" class="btn btn-primary" value="Préréserver" />
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </li>
                 </ul>
             </div>
         </div>
+
+
+
         <div class="describe col-lg-7">
             <h3 class="text-center"><strong>Informations</strong></h3>
             <hr class="my-4">
+
             <div class="row">
                 <div class="col-6">
                     <p>Genre : <label th:text="${livre.genre.genre}"></label></p>

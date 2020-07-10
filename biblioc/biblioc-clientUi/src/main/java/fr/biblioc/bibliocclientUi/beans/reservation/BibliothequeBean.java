@@ -19,6 +19,8 @@ public class BibliothequeBean {
     @NotNull
     private AdresseBean adresse;
 
+    private List<ListeAttenteBean> listesAttentes;
+
     private List<ExemplaireBean> exemplaires;
     //------------------------- CONSTRUCTEUR -------------------------
 
@@ -26,6 +28,7 @@ public class BibliothequeBean {
      * constructeur
      */
     public BibliothequeBean() {
+        listesAttentes = new ArrayList<>();
         exemplaires = new ArrayList<>();
     }
 
@@ -58,6 +61,10 @@ public class BibliothequeBean {
         exemplaires.add(exemplaire);
     }
 
+    public void addListAttente(ListeAttenteBean listeAttente) {
+        listesAttentes.add(listeAttente);
+    }
+
     //------------------------- GETTER/SETTER -------------------------
 
     public int getid_biblio() {
@@ -82,6 +89,14 @@ public class BibliothequeBean {
 
     public void setAdresse(AdresseBean adresse) {
         this.adresse = adresse;
+    }
+
+    public List<ListeAttenteBean> getListesAttentes() {
+        return listesAttentes;
+    }
+
+    public void setListesAttentes(List<ListeAttenteBean> listesAttentes) {
+        this.listesAttentes = listesAttentes;
     }
 
     public List<ExemplaireBean> getExemplaires() {
