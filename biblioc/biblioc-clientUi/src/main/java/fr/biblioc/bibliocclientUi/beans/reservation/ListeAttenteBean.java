@@ -59,6 +59,10 @@ public class ListeAttenteBean {
         return sizeListAttente;
     }
 
+    public int getnbrePrereservation(){
+        return preReservationList.size();
+    }
+
     //------------------------- GETTER/SETTER -------------------------
 
     public int getId_liste_attente() {

@@ -69,8 +69,8 @@
                                     <td>
                                         <form th:switch="${reservation.getExtension()}" name="extention_pret" action="#" th:action="@{/gestion/extention}" method="post">
                                             <input type="hidden" name="id_reservation" th:value="${reservation.id_reservation}" />
-                                            <input th:case="false" type="submit" value="Extention" class="btn btn-outline-success"/>
-                                            <input th:case="true" disabled type="submit" value="Extention" class="btn btn-outline-secondary"/>
+                                            <input th:case="false" type="submit" value="Extension" class="btn btn-outline-success"/>
+                                            <input th:case="true" disabled type="submit" value="Extension" class="btn btn-outline-secondary"/>
                                         </form>
                                     </td>
                                     <td>
