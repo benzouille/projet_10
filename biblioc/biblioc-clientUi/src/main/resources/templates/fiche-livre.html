@@ -89,6 +89,10 @@
                                             <label th:text="${livre.titre}"></label>
                                             <label>n'est pas disponible dans la bibliothèque</label>
                                             <label th:text="${bibliotheque.getNom()}"></label>
+                                            <label>Il sera disponible dans minimum : </label>
+                                            <label th:text="${bibliotheque.listesAttentes.get(0).getnbrePrereservation()*28+1}"></label>
+                                            <label> jour(s).</label>
+                                            <label>Vous serez prévenu de la disponibilité de l'ouvrage par email.</label>
                                             <label>Souhaitez vous le préréserver ? </label>
                                             <input type="submit" class="btn btn-primary" value="Préréserver" />
                                         </form>

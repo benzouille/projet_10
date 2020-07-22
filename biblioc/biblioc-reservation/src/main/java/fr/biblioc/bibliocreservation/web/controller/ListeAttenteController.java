@@ -46,7 +46,7 @@ public class ListeAttenteController {
     }
 
     /**
-     * Récuperer un listeAttente par sa bibliotheque et son livre
+     * Récuperer un listeAttente par son livre
      * @param id_livre int
      * @return bean {@link ListeAttente}
      */
@@ -60,6 +60,20 @@ public class ListeAttenteController {
         }
 
         return listeAttenteDtos;
+    }
+
+    /**
+     * Récuperer une listeAttente par sa bibliotheque et son livre
+     * @param id_livre int
+     * @return bean {@link ListeAttente}
+     */
+    @GetMapping( value = "/ListeAttente/{id_livre}/{id_bibliotheque}")
+    public ListeAttenteDto recupererListesAttenteParLivre(@PathVariable("id_livre") int id_livre, @PathVariable("id_bibliotheque") int id_bibliotheque) {
+
+        ListeAttente listeAttente = listeAttenteDao.findByIdLivreAndIdBiblio(id_livre, id_bibliotheque);
+        ListeAttenteDto listeAttenteDto = getListeAttenteDto(listeAttente);
+
+        return listeAttenteDto;
     }
 
     /**

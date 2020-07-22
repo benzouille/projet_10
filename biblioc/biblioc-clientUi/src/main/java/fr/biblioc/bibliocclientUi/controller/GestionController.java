@@ -2,6 +2,8 @@ package fr.biblioc.bibliocclientUi.controller;
 
 import fr.biblioc.bibliocclientUi.beans.authentification.CompteBean;
 import fr.biblioc.bibliocclientUi.beans.reservation.ExemplaireBean;
+import fr.biblioc.bibliocclientUi.beans.reservation.ListeAttenteBean;
+import fr.biblioc.bibliocclientUi.beans.reservation.PreReservationBean;
 import fr.biblioc.bibliocclientUi.beans.reservation.ReservationBean;
 import fr.biblioc.bibliocclientUi.beans.utilisateur.UtilisateurBean;
 import fr.biblioc.bibliocclientUi.proxies.BibliocAuthentificationProxy;
@@ -175,6 +177,11 @@ public class GestionController {
     public ModelAndView prereservation(String id_livre, String id_bibliotheque, HttpServletRequest request){
 
         CompteBean compte = (CompteBean)request.getSession().getAttribute("compte");
+        ListeAttenteBean listeAttente = reservationProxy.listAttente(Integer.parseInt(id_livre), Integer.parseInt(id_bibliotheque));
+
+
+        System.out.println(listeAttente);
+        //PreReservationBean preReservation = new PreReservationBean(compte.getId_utilisateur(), newDate(),listeAttente, false);
 
         System.out.println("prereservation : id_livre :" + id_livre + " id_bibliotheque : " + id_bibliotheque + " id_utilisateur : " + compte.getId_utilisateur());
         return new ModelAndView("redirect:/mes_emprunts");
@@ -187,9 +194,20 @@ public class GestionController {
 
         ReservationBean reservation = reservationProxy.getReservation(Integer.parseInt(id_reservation));
         reservation.setRendu(true);
-        ExemplaireBean exemplaire = reservation.getExemplaire();
-        exemplaire.setDisponible(true);
-        reservationProxy.updateExemplaire(exemplaire);
+
+        ListeAttenteBean listeAttente = reservationProxy.listAttente(
+                reservation.getExemplaire().getId_livre(),
+                reservation.getExemplaire().getBibliotheque().getid_biblio());
+        if(!listeAttente.getPreReservationList().isEmpty()){
+            listeAttente.getPreReservationList().get(0);
+            //suivant de la liste
+        }
+        else {
+            ExemplaireBean exemplaire = reservation.getExemplaire();
+            exemplaire.setDisponible(true);
+            reservationProxy.updateExemplaire(exemplaire);
+        }
+        
         reservationProxy.updateReservation(reservation);
 
         return new ModelAndView("redirect:/gestion");

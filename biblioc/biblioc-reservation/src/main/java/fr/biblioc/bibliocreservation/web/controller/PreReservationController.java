@@ -64,7 +64,7 @@ public class PreReservationController {
      * @param preReservation bean {@link PreReservation}
      * @return ResponseEntity PreReservation  renvoi un http status.
      */
-    @PostMapping(value = "/PreReservations")
+    @PostMapping(value = "/PreReservation")
     public ResponseEntity<PreReservation> addPreReservation(PreReservation preReservation){
 
         PreReservation newPreReservation = preReservationDao.save(preReservation);

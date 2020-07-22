@@ -39,4 +39,6 @@ public class BibliocBatchApplication {
 				.toJobParameters();
 		jobLauncher.run(job, params);
 	}
+
+
 }

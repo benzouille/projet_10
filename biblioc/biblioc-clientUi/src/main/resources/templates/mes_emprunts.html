@@ -52,12 +52,12 @@
                     <td>
                         <form name="extention_pret" action="#" th:action="@{/user/extention}" method="post">
 
-<!--                            BUGFIX correction du bug de prolongation d'un prêt si la date de fin de prêt est dépassée.-->
+<!--BUGFIX correction du bug de prolongation d'un prêt si la date de fin de prêt est dépassée.-->
                             <input type="hidden" name="id_reservation" th:value="${reservation.id_reservation}" />
                             <input th:if="${reservation.isExtension_possible()}"
-                                   type="submit" value="Extention" class="btn btn-outline-success"/>
+                                   type="submit" value="Extension" class="btn btn-outline-success"/>
                             <input th:if="${reservation.isExtension_possible() == false}"
-                                   disabled type="submit" value="Extention" class="btn btn-outline-secondary"/>
+                                   disabled type="submit" value="Extension" class="btn btn-outline-secondary"/>
                         </form>
                     </td>
                     <td th:if="${reservation.getRendu() == false}" th:text="non"></td>
@@ -93,12 +93,12 @@
                 <td>
                     <form name="extention_pret" action="#" th:action="@{/user/extention}" method="post">
 
-                        <!--                            BUGFIX correction du bug de prolongation d'un prêt si la date de fin de prêt est dépassée.-->
+                        <!--BUGFIX correction du bug de prolongation d'un prêt si la date de fin de prêt est dépassée.-->
                         <input type="hidden" name="id_reservation" th:value="${reservation.id_reservation}" />
                         <input th:if="${reservation.isExtension_possible()}"
-                               type="submit" value="Extention" class="btn btn-outline-success"/>
+                               type="submit" value="Extension" class="btn btn-outline-success"/>
                         <input th:if="${reservation.isExtension_possible() == false}"
-                               disabled type="submit" value="Extention" class="btn btn-outline-secondary"/>
+                               disabled type="submit" value="Extension" class="btn btn-outline-secondary"/>
                     </form>
                 </td>
                 <td th:if="${reservation.getRendu() == false}" th:text="non"></td>

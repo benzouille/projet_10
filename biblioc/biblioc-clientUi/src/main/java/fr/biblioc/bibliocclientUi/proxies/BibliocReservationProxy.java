@@ -1,9 +1,6 @@
 package fr.biblioc.bibliocclientUi.proxies;
 
-import fr.biblioc.bibliocclientUi.beans.reservation.BibliothequeBean;
-import fr.biblioc.bibliocclientUi.beans.reservation.ExemplaireBean;
-import fr.biblioc.bibliocclientUi.beans.reservation.ListeAttenteBean;
-import fr.biblioc.bibliocclientUi.beans.reservation.ReservationBean;
+import fr.biblioc.bibliocclientUi.beans.reservation.*;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +17,12 @@ public interface BibliocReservationProxy {
 
     @GetMapping(value = "/ListeAttente/{id_livre}")
     List<ListeAttenteBean> listAttente(@PathVariable("id_livre") int id_livre);
+
+    @GetMapping(value = "/ListeAttente/{id_livre}/{id_bibliotheque}")
+    ListeAttenteBean listAttente(@PathVariable("id_livre") int id_livre,@PathVariable("id_bibliotheque") int id_bibliotheque);
+
+    @PostMapping(value = "/PreReservation")
+    PreReservationBean newPrereservation(@RequestBody PreReservationBean prereservation);
 
     @GetMapping(value = "/Reservations/en_cours")
     List<ReservationBean> listeReservationsEnCours();
