@@ -10,11 +10,11 @@ import javax.mail.internet.MimeMessage;
 /**
  * Implementation de ReservationExpireMailSenderService permetant l'envoi de mail
  */
-public class ReservationExpireMailSenderServiceImpl implements ReservationExpireMailSenderService {
+public class MailSenderServiceImpl implements MailSenderService {
 
     private final JavaMailSender javaMailSender;
 
-    public ReservationExpireMailSenderServiceImpl(final JavaMailSender javaMailSender) {
+    public MailSenderServiceImpl(final JavaMailSender javaMailSender) {
         super();
         this.javaMailSender = javaMailSender;
     }

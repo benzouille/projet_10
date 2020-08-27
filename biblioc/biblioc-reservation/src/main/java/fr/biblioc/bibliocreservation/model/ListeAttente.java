@@ -19,7 +19,7 @@ public class ListeAttente {
     @Transient
     private int nbreExemplaire;
 
-    @OneToMany(mappedBy = "listeAttente")
+    @OneToMany(mappedBy = "id_liste_attente")
     private List<PreReservation> preReservationList;
 
     private int id_livre;
@@ -82,7 +82,7 @@ public class ListeAttente {
         return "ListeAttente{" +
                 "id_liste_attente=" + id_liste_attente +
                 ", nbreExemplaire=" + nbreExemplaire +
-                ", preReservationList=" + preReservationList +
+//                ", preReservationList=" + preReservationList +
                 ", id_livre='" + id_livre + '\'' +
                 ", id_bibliotheque=" + id_bibliotheque +
                 '}';

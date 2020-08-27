@@ -195,6 +195,17 @@ public class ExemplaireController implements HealthIndicator {
     }
 
     /**
+     * transforme un objet exemplaireDto en exemplaire
+     * @param exemplaireDto DTO
+     * @return exemplaire ENTITY
+     */
+    public Exemplaire getExemplaireFromDto(ExemplaireDto exemplaireDto) {
+        Exemplaire exemplaire = exemplaireMapper.exemplaireDtoToExemplaire(exemplaireDto);
+            log.info("Exemplaire : " + exemplaire);
+        return exemplaire;
+    }
+
+    /**
      * transforme une list d'objet exemplaire en exemplaireDto
      * @param exemplaires ENTITY
      * @return exemplairesDto DTO

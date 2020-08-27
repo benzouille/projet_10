@@ -91,6 +91,21 @@ public class LivreController implements HealthIndicator {
     }
 
     /**
+     * Récuperer un titre de livre par son id
+     * @param id int
+     * @return bean {@link Livre}
+     */
+    @GetMapping(value = "/Titre/{id}")
+    public String getTitreLivre(@PathVariable("id") int id){
+
+        String titre = livreDao.findTitreById(id);
+
+        log.info("Récupération du titre : " + titre +" avec l'id : "+id);
+
+        return titre;
+    }
+
+    /**
      * Ajouter un livre
      * @param livre bean {@link Livre}
      * @return ResponseEntity bean {@link Livre} renvoi un http status.

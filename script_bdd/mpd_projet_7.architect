@@ -398,7 +398,7 @@
    <relationship id="REL112" populated="true" UUID="5e0fb31c-aec1-4cc0-8c97-58a7decd566d" deferrability="7" deleteRule="3" fk-table-ref="TAB74" fkCardinality="7" identifying="false" name="auteur_livre_auteur_fk" physicalName="auteur_livre_auteur_fk" pk-table-ref="TAB30" pkCardinality="2" updateRule="3" >
     <column-mapping id="CMP113" populated="true" UUID="692b2b1c-a39e-4f3f-a921-8f65fd6d1371" fk-column-ref="COL76" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL31" />
    </relationship>
-   <relationship id="REL114" populated="true" UUID="cf12d91a-8252-4c24-a4ba-34c21285c27f" deferrability="7" deleteRule="3" fk-table-ref="TAB19" fkCardinality="7" identifying="false" name="Genre_livre_fk" physicalName="genre_livre_fk" pk-table-ref="TAB38" pkCardinality="2" updateRule="3" >
+   <relationship id="REL114" populated="true" UUID="cf12d91a-8252-4c24-a4ba-34c21285c27f" deferrability="7" deleteRule="3" fk-table-ref="TAB19" fkCardinality="7" identifying="false" name="Genre_livre_fk" physicalName="Genre_livre_fk" pk-table-ref="TAB38" pkCardinality="2" updateRule="3" >
     <column-mapping id="CMP115" populated="true" UUID="7a2af91f-593d-4370-a6f0-689acc7ee316" fk-column-ref="COL22" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL39" />
    </relationship>
    <relationship id="REL116" populated="true" UUID="1367467b-f828-4ef7-b53a-df4f935d112c" deferrability="7" deleteRule="3" fk-table-ref="TAB19" fkCardinality="7" identifying="false" name="editeur_livre_fk" physicalName="editeur_livre_fk" pk-table-ref="TAB43" pkCardinality="2" updateRule="3" >
