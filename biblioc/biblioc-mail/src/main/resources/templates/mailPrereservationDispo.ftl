@@ -88,7 +88,8 @@
                 <p>Bonjour ${prenom}</p>
                 <p>
                     Le livre <span style="color: #60a3bc;">${titre}</span> provenant de la bibliotheque <span style="color: #60a3bc;">${bibliotheque}</span>, est disponible pour prêt. <br>
-                    Vous pouvez vous rendre sur votre espace pour valider l'emprunt de cet ouvrage.
+                    Vous pouvez vous rendre sur votre espace biblioc pour valider l'emprunt de cet ouvrage. <br>
+                    Si dans 48 heures aucune réponse a été donnée, la réservation sera considérée comme close.
                 </p>
                 <br>
                 <p>L'équipe de biblioc</p>

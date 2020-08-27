@@ -78,31 +78,23 @@
             <tr>
                 <th scope="col">N° préréservation</th>
                 <th scope="col">Titre</th>
-                <th scope="col">Date de disponibilitée</th>
-                <th scope="col">N° dans la file d'attente</th>
+                <th scope="col">Réserver</th>
                 
             </tr>
             </thead>
             <tbody>
-            <tr th:each="reservation : ${reservations}">
-                <td th:text="${reservation.getExemplaire().getid_exemplaire()}"></td>
-                <td th:text="${reservation.id_reservation}"></td>
-                <td th:text="${reservation.getExemplaire().livre.titre}"></td>
-                <td th:text="${#dates.format(reservation.getDate_emprunt(), 'dd-MM-yyyy')}"></td>
-                <td th:text="${#dates.format(reservation.getDate_retour(), 'dd-MM-yyyy')}"></td>
+            <tr th:each="prereservation : ${prereservations}">
+                <td th:text="${prereservation.getId_prereservation()}"></td>
+                <td th:text="${prereservation.getTitre()}"></td>
                 <td>
-                    <form name="extention_pret" action="#" th:action="@{/user/extention}" method="post">
-
-                        <!--BUGFIX correction du bug de prolongation d'un prêt si la date de fin de prêt est dépassée.-->
-                        <input type="hidden" name="id_reservation" th:value="${reservation.id_reservation}" />
-                        <input th:if="${reservation.isExtension_possible()}"
-                               type="submit" value="Extension" class="btn btn-outline-success"/>
-                        <input th:if="${reservation.isExtension_possible() == false}"
-                               disabled type="submit" value="Extension" class="btn btn-outline-secondary"/>
+                    <form name="accepter_pret" action="#" th:action="@{/user/accept}" method="post">
+                        <input type="hidden" name="id_prereservation" th:value="${prereservation.}" />
+                        <input th:if="${1+1==2}"
+                               type="submit" value="Accepter" class="btn btn-outline-success"/>
+                        <input th:if="${1+1==2}"
+                               type="submit" value="Refuser" class="btn btn-outline-danger"/>
                     </form>
                 </td>
-                <td th:if="${reservation.getRendu() == false}" th:text="non"></td>
-                <td th:if="${reservation.getRendu() == true}" th:text="oui"></td>
             </tr>
             </tbody>
         </table>

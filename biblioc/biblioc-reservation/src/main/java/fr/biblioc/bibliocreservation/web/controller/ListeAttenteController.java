@@ -5,6 +5,7 @@ import fr.biblioc.bibliocreservation.dto.ListeAttenteDto;
 import fr.biblioc.bibliocreservation.mapper.ListeAttenteMapper;
 import fr.biblioc.bibliocreservation.model.ListeAttente;
 import fr.biblioc.bibliocreservation.web.exceptions.ErrorAddException;
+import fr.biblioc.bibliocreservation.web.exceptions.ObjectNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,18 @@ public class ListeAttenteController {
 
         List<ListeAttente> listeAttentes = listeAttenteDao.findAll();
         return getListeAttenteDtos(listeAttentes);
+    }
+
+    @GetMapping(value = "/listAttenteByid/{id_liste_attente}")
+    public ListeAttenteDto listAttenteById_liste_attente(@PathVariable("id_liste_attente") int id_liste_attente) {
+
+        Optional<ListeAttente> listeAttente = listeAttenteDao.findById(id_liste_attente);
+        if (listeAttente.isPresent()) {
+            ListeAttenteDto listeAttenteDto = getListeAttenteDto(listeAttente.get());
+            return listeAttenteDto;
+        }else {
+            throw new ObjectNotFoundException("la liste d'attente n'existe pas.");
+        }
     }
 
     /**
@@ -135,5 +148,4 @@ public class ListeAttenteController {
         log.info("List<ListeAttenteDto> : " + listeAttentesDto);
         return listeAttentesDto;
     }
-
 }

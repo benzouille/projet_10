@@ -11,6 +11,9 @@ import java.util.List;
 @Repository
 public interface ListeAttenteDao extends JpaRepository<ListeAttente, Integer> {
 
+    @Query(value = "SELECT * FROM liste_attente WHERE id_liste_attente = :id_liste_attente", nativeQuery = true)
+    List<ListeAttente> findById_liste_attente(@Param("id_liste_attente") int id_liste_attente);
+
     @Query(value = "SELECT * FROM liste_attente WHERE id_livre = :id_livre", nativeQuery = true)
     List<ListeAttente> findByIdLivre(@Param("id_livre") int id_livre);
 

@@ -1,9 +1,9 @@
-package fr.biblioc.mail.model;
+package fr.biblioc.bibliocreservation.model;
 
 /**
  * POJO des données du mail a envoyer
  */
- public class PrereservationDispoData {
+public class PrereservationDispoDataBean {
 
     //------------------------- ATTRIBUTS -------------------------
 
@@ -22,7 +22,7 @@ package fr.biblioc.mail.model;
     /**
      * Constructeur
      */
-    public PrereservationDispoData() {
+    public PrereservationDispoDataBean() {
     }
 
     /**
@@ -33,7 +33,7 @@ package fr.biblioc.mail.model;
      * @param bibliotheque string
      * @param titre string
      */
-    public PrereservationDispoData(Integer id_exemplaire, String email, String prenom, String bibliotheque, String titre) {
+    public PrereservationDispoDataBean(Integer id_exemplaire, String email, String prenom, String bibliotheque, String titre) {
         this.id_exemplaire = id_exemplaire;
         this.email = email;
         this.prenom = prenom;

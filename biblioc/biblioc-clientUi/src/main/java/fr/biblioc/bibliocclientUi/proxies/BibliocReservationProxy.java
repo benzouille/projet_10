@@ -18,11 +18,26 @@ public interface BibliocReservationProxy {
     @GetMapping(value = "/ListeAttente/{id_livre}")
     List<ListeAttenteBean> listAttente(@PathVariable("id_livre") int id_livre);
 
+    @GetMapping(value = "/listAttenteByid/{id_liste_attente}")
+    ListeAttenteBean listAttenteById(@PathVariable("id_liste_attente") int id_liste_attente);
+
     @GetMapping(value = "/ListeAttente/{id_livre}/{id_bibliotheque}")
     ListeAttenteBean listAttente(@PathVariable("id_livre") int id_livre,@PathVariable("id_bibliotheque") int id_bibliotheque);
 
+    @GetMapping(value = "/PreReservation/{id_compte}")
+    List<PreReservationBean> listPreReservationByIdUser(@PathVariable("id_compte") int id_compte);
+
+    @GetMapping( value = "/PreReservation/{id_prereservation}")
+    PreReservationBean preReservationById(@PathVariable int id_prereservation);
+
+    @GetMapping(value = "/PreReservation/notExpired")
+    List<PreReservationBean> listPreReservationNotExpired();
+
     @PostMapping(value = "/PreReservation")
     PreReservationBean newPrereservation(@RequestBody PreReservationBean prereservation);
+
+    @PutMapping(value = "/PreReservation")
+    PreReservationBean updatePreReservation(@RequestBody PreReservationBean preReservation);
 
     @GetMapping(value = "/Reservations/en_cours")
     List<ReservationBean> listeReservationsEnCours();

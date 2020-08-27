@@ -16,6 +16,9 @@ public interface LivreDao extends JpaRepository<Livre, Integer> {
 
     List<Livre> findByTitre(String titre);
 
+    @Query(value = "SELECT titre FROM livre WHERE id_livre = :id", nativeQuery = true)
+    String findTitreById(@Param("id") int id);
+
     @Query(value = "SELECT * FROM livre WHERE id_genre = :id_genre", nativeQuery = true)
     List<Livre> findById_genre(@Param("id_genre") int genre);
 
