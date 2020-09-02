@@ -88,10 +88,10 @@
                 <td th:text="${prereservation.getTitre()}"></td>
                 <td>
                     <form name="accepter_pret" action="#" th:action="@{/user/accept}" method="post">
-                        <input type="hidden" name="id_prereservation" th:value="${prereservation.}" />
-                        <input th:if="${1+1==2}"
+                        <input type="hidden" name="id_prereservation" th:value="${prereservation.getId_prereservation()}" />
+                        <input th:if="${prereservation.isMailSend() == true}"
                                type="submit" value="Accepter" class="btn btn-outline-success"/>
-                        <input th:if="${1+1==2}"
+                        <input th:if="${prereservation.isMailSend() == true}"
                                type="submit" value="Refuser" class="btn btn-outline-danger"/>
                     </form>
                 </td>

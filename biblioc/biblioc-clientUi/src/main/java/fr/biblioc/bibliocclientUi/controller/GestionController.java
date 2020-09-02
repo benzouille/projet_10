@@ -179,6 +179,7 @@ public class GestionController {
 
         System.out.println(listeAttente);
         PreReservationBean preReservation = new PreReservationBean(compte.getId_utilisateur(), newDate(), listeAttente.getId_liste_attente(), false, null, false);
+        preReservation.setId_exemplaire(-1);
         System.out.println(preReservation.toString());
         reservationProxy.newPrereservation(preReservation);
 

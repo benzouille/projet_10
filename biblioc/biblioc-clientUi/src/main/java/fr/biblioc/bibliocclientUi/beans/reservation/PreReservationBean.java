@@ -17,7 +17,7 @@ public class PreReservationBean {
     
     private int id_liste_attente;
 
-    private int id_exemplaire;
+    private Integer id_exemplaire;
 
     private boolean expire;
 
@@ -96,7 +96,7 @@ public class PreReservationBean {
         return id_exemplaire;
     }
 
-    public void setId_exemplaire(int id_exemplaire) {
+    public void setId_exemplaire(Integer id_exemplaire) {
         this.id_exemplaire = id_exemplaire;
     }
 
