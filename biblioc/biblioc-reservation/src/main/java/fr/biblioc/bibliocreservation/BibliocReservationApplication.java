@@ -33,8 +33,8 @@ public class BibliocReservationApplication {
 	 */
 	//1 fois par jour a 1h01
 	//@Scheduled(cron = "0 1 1 * * ?")
-	//toutes les 30 secondes
-	@Scheduled(fixedRate = 30000)
+	//toutes les 120 secondes
+	@Scheduled(fixedRate = 120000)
 	public void perform() throws Exception
 	{
 		System.out.println("scheduled run");

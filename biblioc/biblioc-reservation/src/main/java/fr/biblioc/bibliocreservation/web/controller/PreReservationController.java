@@ -51,7 +51,7 @@ public class PreReservationController {
      * Affiche la liste de toutes les preReservations d'un utilisateur
      * @return liste de {@link PreReservation}
      */
-    @GetMapping(value = "/PreReservation/{id_compte}")
+    @GetMapping(value = "/PreReservations/{id_compte}")
     public List<PreReservationDto> listPreReservationsByIdUser(@PathVariable int id_compte){
 
         List<PreReservation> preReservations = preReservationDao.findAllById_compte(id_compte);
