@@ -5,6 +5,8 @@ import fr.biblioc.bibliocreservation.dto.PreReservationDto;
 import fr.biblioc.bibliocreservation.mapper.PreReservationMapper;
 import fr.biblioc.bibliocreservation.model.PreReservation;
 import fr.biblioc.bibliocreservation.web.exceptions.ErrorAddException;
+import javassist.tools.rmi.ObjectNotFoundException;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,9 +44,20 @@ public class PreReservationController {
      */
     @GetMapping(value = "/PreReservations")
     public List<PreReservationDto> listeDesPreReservations(){
+        List<PreReservationDto> preReservationDtoList = null;
+        List<PreReservation> preReservations = getPrereservationDao();
+        try {
+            preReservationDtoList = getPreReservationDtos(preReservations);
+        } catch (ObjectNotFoundException e) {
+            e.printStackTrace();
+        }
 
-        List<PreReservation> preReservations = preReservationDao.findAll();
-        return getPreReservationDtos(preReservations);
+        return preReservationDtoList;
+    }
+
+    @NotNull
+    protected List<PreReservation> getPrereservationDao() {
+        return preReservationDao.findAll();
     }
 
     /**
@@ -53,12 +66,15 @@ public class PreReservationController {
      */
     @GetMapping(value = "/PreReservations/{id_compte}")
     public List<PreReservationDto> listPreReservationsByIdUser(@PathVariable int id_compte){
-
+        List<PreReservationDto> preReservationDtoList = null;
         List<PreReservation> preReservations = preReservationDao.findAllById_compte(id_compte);
-        if(preReservations != null)
-            System.out.println(preReservations);
-        else System.out.println("c'est null");
-        return getPreReservationDtos(preReservations);
+        try {
+            preReservationDtoList = getPreReservationDtos(preReservations);
+        } catch (ObjectNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return preReservationDtoList;
     }
 
     /**
@@ -138,7 +154,7 @@ public class PreReservationController {
      * @param preReservation ENTITY
      * @return preReservationDto DTO
      */
-    private PreReservationDto getPreReservationDto(Optional<PreReservation> preReservation) {
+    protected PreReservationDto getPreReservationDto(Optional<PreReservation> preReservation) {
         PreReservationDto preReservationDto = null;
 
         if(preReservation.isPresent()) {
@@ -153,16 +169,26 @@ public class PreReservationController {
      * @param preReservations ENTITY
      * @return preReservationsDto DTO
      */
-    private List<PreReservationDto> getPreReservationDtos(List<PreReservation> preReservations) {
+    public List<PreReservationDto> getPreReservationDtos(List<PreReservation> preReservations) throws ObjectNotFoundException {
         List<PreReservationDto> preReservationsDto = new ArrayList<>();
 
-        if(!preReservations.isEmpty()){
-            for (PreReservation preReservation : preReservations){
+        if(preReservations.isEmpty()){
+            throw new ObjectNotFoundException("la liste est vide");
+        }else {
+            for (PreReservation preReservation : preReservations) {
                 preReservationsDto.add(preReservationMapper.preReservationToPreReservationDto(preReservation));
             }
         }
-
         log.info("List<PreReservationDto> : " + preReservationsDto);
         return preReservationsDto;
+    }
+
+    //------------------------- SETTER -------------------------
+    public void setPreReservationDao(PreReservationDao preReservationDao) {
+        this.preReservationDao = preReservationDao;
+    }
+
+    public void setPreReservationMapper(PreReservationMapper preReservationMapper) {
+        this.preReservationMapper = preReservationMapper;
     }
 }
