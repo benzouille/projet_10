@@ -5,7 +5,7 @@ import fr.biblioc.bibliocreservation.dto.PreReservationDto;
 import fr.biblioc.bibliocreservation.mapper.PreReservationMapper;
 import fr.biblioc.bibliocreservation.model.PreReservation;
 import fr.biblioc.bibliocreservation.web.exceptions.ErrorAddException;
-import javassist.tools.rmi.ObjectNotFoundException;
+import fr.biblioc.bibliocreservation.web.exceptions.FunctionalException;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,12 +43,12 @@ public class PreReservationController {
      * @return liste de {@link PreReservation}
      */
     @GetMapping(value = "/PreReservations")
-    public List<PreReservationDto> listeDesPreReservations(){
+    public List<PreReservationDto> listeDesPreReservations() {
         List<PreReservationDto> preReservationDtoList = null;
         List<PreReservation> preReservations = getPrereservationDao();
         try {
             preReservationDtoList = getPreReservationDtos(preReservations);
-        } catch (ObjectNotFoundException e) {
+        } catch (FunctionalException e) {
             e.printStackTrace();
         }
 
@@ -70,7 +70,7 @@ public class PreReservationController {
         List<PreReservation> preReservations = preReservationDao.findAllById_compte(id_compte);
         try {
             preReservationDtoList = getPreReservationDtos(preReservations);
-        } catch (ObjectNotFoundException e) {
+        } catch (FunctionalException e) {
             e.printStackTrace();
         }
 
@@ -169,14 +169,14 @@ public class PreReservationController {
      * @param preReservations ENTITY
      * @return preReservationsDto DTO
      */
-    public List<PreReservationDto> getPreReservationDtos(List<PreReservation> preReservations) throws ObjectNotFoundException {
+    public List<PreReservationDto> getPreReservationDtos(List<PreReservation> preReservations) throws FunctionalException {
         List<PreReservationDto> preReservationsDto = new ArrayList<>();
 
-        if(preReservations.isEmpty()){
-            throw new ObjectNotFoundException("la liste est vide");
-        }else {
+        if ( preReservations.isEmpty() ) {
+            throw new FunctionalException("la liste est vide");
+        } else {
             for (PreReservation preReservation : preReservations) {
-                preReservationsDto.add(preReservationMapper.preReservationToPreReservationDto(preReservation));
+                preReservationsDto.add( preReservationMapper.preReservationToPreReservationDto(preReservation) );
             }
         }
         log.info("List<PreReservationDto> : " + preReservationsDto);
