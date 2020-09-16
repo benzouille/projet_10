@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.chrono.ChronoLocalDate;
+import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -67,7 +69,7 @@ public class PreReservationController {
     @GetMapping(value = "/PreReservations/{id_compte}")
     public List<PreReservationDto> listPreReservationsByIdUser(@PathVariable int id_compte){
         List<PreReservationDto> preReservationDtoList = null;
-        List<PreReservation> preReservations = preReservationDao.findAllById_compte(id_compte);
+        List<PreReservation> preReservations = getPrereservationDaoById_compte(id_compte);
         try {
             preReservationDtoList = getPreReservationDtos(preReservations);
         } catch (FunctionalException e) {
@@ -75,6 +77,11 @@ public class PreReservationController {
         }
 
         return preReservationDtoList;
+    }
+
+    @NotNull
+    protected List<PreReservation> getPrereservationDaoById_compte(int id_compte) {
+        return preReservationDao.findAllById_compte(id_compte);
     }
 
     /**
@@ -143,10 +150,11 @@ public class PreReservationController {
         LocalDate localDate = LocalDate.now().minusDays(2);
 
         if(date.after(Date.valueOf(localDate))){
-            return true;
-        } else {
             return false;
+        } else {
+            return true;
         }
+
     }
 
     /**

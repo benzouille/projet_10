@@ -2,9 +2,9 @@ package fr.biblioc.bibliocreservation.web.controller;
 
 import fr.biblioc.bibliocreservation.dao.PreReservationDao;
 import fr.biblioc.bibliocreservation.dto.PreReservationDto;
+import fr.biblioc.bibliocreservation.mapper.PreReservationMapperImpl;
 import fr.biblioc.bibliocreservation.model.PreReservation;
 import fr.biblioc.bibliocreservation.web.exceptions.FunctionalException;
-import javassist.tools.rmi.ObjectNotFoundException;
 import org.jetbrains.annotations.NotNull;
 
 import org.junit.jupiter.api.Assertions;
@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -37,6 +37,9 @@ public class PrereservationControllerTest {
 
     @Mock
     PreReservationDao preReservationDao;
+
+    @Mock
+    PreReservationMapperImpl mapper;
 
     @Test
     public void listeDesPreReservations_should_return_a_list() throws FunctionalException {
@@ -56,11 +59,86 @@ public class PrereservationControllerTest {
         //assertThat(preReservationDtoList.get(1).getId_compte()).isEqualTo(1);
     }
 
+
+    public void getPrereservationDaoById_compte() throws FunctionalException {
+        //GIVEN
+        int id_compte = 1;
+        List<PreReservation> preReservationList = getPreReservationsDummy();
+
+
+
+    }
+
+    //TODO A revoir
     @Test
-    public void listPreReservationsByIdUser_should_return_a_list(){}
+    public void listPreReservationsByIdUser_should_return_a_list() throws FunctionalException {
+        //GIVEN
+        int id_compte = 1;
+        List<PreReservation> preReservationList = getPreReservationsDummy();
+        List<PreReservationDto> preReservationListDto = getPreReservationDtosDummy();
+
+        preReservationController.setPreReservationMapper(mapper);
+
+        when(preReservationController.getPrereservationDaoById_compte(id_compte)).thenReturn(preReservationList);
+        //when(preReservationController.getPreReservationDtos(preReservationList)).thenReturn(preReservationListDto);
+        doReturn(preReservationListDto).when(preReservationController).getPreReservationDtos(preReservationList);
+
+
+        //WHEN
+        List<PreReservationDto> preReservationDtoList = preReservationController.listPreReservationsByIdUser(id_compte);
+
+        //THEN
+        assertThat(preReservationController.listeDesPreReservations().get(1).getId_compte()).isEqualTo(1);
+    }
+
+    //TODO A revoir
+    @Test
+    public void listPreReservationsByIdUser_should_return_exception() throws FunctionalException {
+        //GIVEN
+        int id_compte = 1;
+        List<PreReservation> preReservationList = getPreReservationsDummy();
+        List<PreReservationDto> preReservationListDto = getPreReservationDtosDummy();
+
+        when(preReservationController.getPrereservationDaoById_compte(id_compte)).thenReturn(preReservationList);
+        //when(preReservationController.getPreReservationDtos(preReservationList)).thenReturn(preReservationListDto);
+        doReturn(preReservationListDto).when(preReservationController).getPreReservationDtos(preReservationList);
+
+
+        //WHEN
+        List<PreReservationDto> preReservationDtoList = preReservationController.listPreReservationsByIdUser(id_compte);
+
+        //THEN
+        //assertThat(preReservationController.listeDesPreReservations().get(1).getId_compte()).isEqualTo(1);
+        Assertions.assertThrows(FunctionalException.class, () -> preReservationController.listPreReservationsByIdUser(id_compte));
+    }
 
     @Test
-    public void addPreReservation_should_add_a_list(){}
+    public void addPreReservation_should_add_to_list(){}
+
+    @Test
+    public void getPreReservationDto_should_return_PreReservationDto() throws FunctionalException {
+        PreReservation preReservation = new PreReservation(1, Date.from(Instant.now()), 1, true, true);
+        PreReservationDto preReservationDto = new PreReservationDto(1, 1, Date.from(Instant.now()), 1, true, true);
+
+        when(preReservationController.getPreReservationDto(java.util.Optional.of(preReservation))).thenReturn(preReservationDto);
+
+        preReservationController.getPreReservationDto(java.util.Optional.of(preReservation));
+
+        assertThat(preReservationController.getPreReservationDto(java.util.Optional.of(preReservation))).isEqualTo(preReservationDto);
+    }
+
+    @Test
+    public void getPreReservationDtos_should_return_PreReservationDtoList() throws FunctionalException {
+        List<PreReservation> preReservationList = getPreReservationsDummy();
+        List<PreReservationDto> preReservationDtoList = getPreReservationDtosDummy();
+        preReservationController.setPreReservationMapper(mapper);
+
+        when(preReservationController.getPreReservationDtos(preReservationList)).thenReturn(preReservationDtoList);
+
+        preReservationController.getPreReservationDtos(preReservationList);
+
+        assertThat(preReservationController.getPreReservationDtos(preReservationList)).isEqualTo(preReservationDtoList);
+    }
 
     @Test
     public void getPreReservationDtos_should_be_empty() throws FunctionalException {
@@ -69,9 +147,63 @@ public class PrereservationControllerTest {
     }
 
     @Test
-    public void getPreReservationDtos_should_transform_a_list_PreReservation_To_PreReservationDto(){
+    public void expirationDateCheck_should_return_true(){
+        //GIVEN
+        Date dateToTest = new Date(1988, 11, 2);
+
+        //WHEN
+        boolean expired = preReservationController.expirationDateCheck(dateToTest);
+
+        //THEN
+        assertThat(expired).isEqualTo(true);
     }
 
+    @Test
+    public void expirationDateCheck_should_return_false(){
+        //GIVEN
+        Date dateToTest = new Date(2020, 11, 2);
+
+        //WHEN
+        boolean expired = preReservationController.expirationDateCheck(dateToTest);
+
+        //THEN
+        assertThat(expired).isEqualTo(false);
+    }
+
+    @Test
+    public void getExpiredMailSendPreReservation_should_return_list(){
+
+        //GIVEN
+        PreReservation preReservation = new PreReservation(1, Date.valueOf("2020-1-1"), 1, false, false);
+        List<PreReservation> preReservationListExpired = new ArrayList<>();
+        preReservationListExpired.add(preReservation);
+
+        //WHEN
+        when(preReservationDao.findAllByNotExpired()).thenReturn(preReservationListExpired);
+        List<PreReservation> preReservationList = preReservationController.getExpiredMailSendPreReservation();
+
+        //THEN
+        assertThat(preReservationList).isEqualTo(preReservationListExpired);
+
+    }
+
+    @Test
+    public void getExpiredMailSendPreReservation_should_return_list_null(){
+
+        //GIVEN
+        List<PreReservation> preReservationListExpired = new ArrayList<>();
+
+        //WHEN
+        when(preReservationDao.findAllByNotExpired()).thenReturn(preReservationListExpired);
+        List<PreReservation> preReservationList = preReservationController.getExpiredMailSendPreReservation();
+
+        //THEN
+        assertThat(preReservationList).isEqualTo(preReservationListExpired);
+
+    }
+
+
+    //DUMMY------------------------------------------------
 
     @NotNull
     private List<PreReservationDto> getPreReservationDtosDummy() {

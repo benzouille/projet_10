@@ -13,10 +13,15 @@ import javax.mail.internet.MimeMessage;
 public class MailSenderServiceImpl implements MailSenderService {
 
     private final JavaMailSender javaMailSender;
+    private Boolean html = true;
 
     public MailSenderServiceImpl(final JavaMailSender javaMailSender) {
         super();
         this.javaMailSender = javaMailSender;
+    }
+
+    public void setHtmlFormat(Boolean html){
+        this.html = html;
     }
 
     @Override
@@ -24,7 +29,7 @@ public class MailSenderServiceImpl implements MailSenderService {
 
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
-        helper.setText(content, true);
+        helper.setText(content, html);
         helper.setFrom("nePasRepondre@biblioc.com");
         helper.setTo(mailDestination);
         helper.setSubject(titre);
